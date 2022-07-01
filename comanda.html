@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comanda</title>
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Icons -->
+    <script src="https://kit.fontawesome.com/aae1a073a8.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/18/18296.png?w=360" type="image/x-icon">
+</head>
+
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+    :root {
+        --black: #1f1f1f;
+        --white: #ffffff;
+        --red: #ff3527;
+        --grey: #737373;
+        --box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+        --transition: all 0.2s linear;
+    }
+
+    *,
+    *::after,
+    *::before {
+        box-sizing: inherit;
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        font-size: 62.5%;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: "Ubuntu", sans-serif;
+        font-size: 1.6rem;
+        font-weight: 400;
+        color: var(--black);
+    }
+
+    .yellow {
+        color: var(--red);
+    }
+
+    /* Nav / Menu */
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 1rem 7%;
+        height: 8rem;
+        background: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: var(--box-shadow);
+        z-index: 1000;
+    }
+
+    .navbar {
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+        display: flex;
+    }
+
+
+    .navbar a {
+        font-weight: 500;
+        transition: var(--transition);
+        padding: 1rem;
+        border-bottom: 2px solid transparent;
+    }
+
+    .navbar a:not(:last-child) {
+        margin-right: 1rem;
+    }
+
+    .navbar a:hover {
+        color: var(--red);
+        border-color: var(--red);
+    }
+
+    /* comanda */
+    .home {
+        padding-top: 10rem;
+        display: grid;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    /* Loading */
+    .preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000000;
+    }
+
+    .preloader img {
+        width: 20rem;
+        height: 20rem;
+    }
+
+    /* Footer*/
+    .footer .bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem 0;
+        background-color: var(--red);
+        color: #ffffff;
+    }
+
+    @media (max-width: 768px) {
+        .footer .bottom {
+            padding: 0.5rem;
+        }
+    }
+
+    /* botao quantidade */
+    input {
+        border: 0;
+        height: 30px;
+    }
+
+    input.less,
+    input.more {
+        background: var(--red);
+        padding: 0 10px;
+        color: var(--white);
+        border: 1px solid var(--white);
+    }
+
+    input.qty {
+        width: 10%;
+        border: 1px solid var(--red);
+        background: var(--white);
+        text-align: center;
+    }
+
+    /* input forma de pagamento */
+    .form-check-input:checked {
+        background-color: #fd310d;
+        border-color: #fd310d;
+    }
+
+    /* finalizar pagamento */
+    .d-grid {
+        margin: 15px;
+    }
+
+    .home{
+        padding-bottom: 5rem;
+    }
+</style>
+
+<body onload="totalComanda()">
+
+    <!-- Loading -->
+    <div class="preloader">
+        <img src="./images/loading.gif" alt="" />
+    </div>
+
+    <!-- Nav -->
+    <header class="header">
+        <nav class="navbar">
+            <div>
+                <h2>Cardápio Web<span class="yellow"> Comanda</span></h2>
+            </div>
+
+            <div>
+                <a href="index.html" class="btn carrinho"> Cardápio <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="container home">
+        <div class="well">
+
+            <!-- botoes comanda -->
+            <p>
+                <button class="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    Comanda 01
+                </button>
+
+                <button class="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    Comanda 02
+                </button> 
+
+                <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    Nova Comanda
+                </button>
+            </p>
+
+            <!-- comanda 1 -->
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <table class="table table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantidade</th>
+                                <th>Valor</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <!-- itens comanda -->
+                        <tbody>
+                            <tr>
+                                <td>Panquecas</td>
+                                <td>
+                                    <input type="button" class="less" value="-"
+                                        onclick="totalComanda(); product_1.value = (+product_1.value-1);">
+                                    <input type="number" class="qty qtd" id="product_1" name="name" value="1" min="1">
+                                    <input type="button" class="less" value="+"
+                                        onclick="totalComanda(); product_1.value = (+product_1.value+1);">
+
+                                <td> R$ <span class="valor" value="15.99">15.99</span> </td>
+                                <!-- remover item da comanda -->
+                                <td><button class="btn btn-danger remover">Remover</button></td>
+                            </tr>
+                            <tr>
+                                <td>Milkshake</td>
+                                <td>
+                                    <input type="button" class="less" value="-"
+                                        onclick="totalComanda(); product_2.value = (+product_2.value-1);">
+                                    <input type="number" class="qty qtd" id="product_2" name="name" value="3" />
+                                    <input type="button" class="more" value="+"
+                                        onclick="totalComanda(); product_2.value = (+product_2.value+1);">
+                                </td>
+                                <td> R$ <span class="valor" value="8.99">8.99</span> </td>
+                                <!-- remover item da comanda -->
+                                <td><button class="btn btn-danger remover">Remover</button></td>
+                            </tr>
+                            <tr>
+                                <td>Bacon Cheddar</td>
+                                <td>
+                                    <input type="button" class="less" value="-"
+                                        onclick="totalComanda(); product_3.value = (+product_3.value-1);">
+                                    <input type="number" class="qty qtd" id="product_3" name="name" value="2">
+                                    <input type="button" class="more" value="+"
+                                        onclick="totalComanda(); product_3.value = (+product_3.value+1);">
+                                </td>
+                                <td> R$ <span class="valor" value="15.99">15.99</span> </td>
+                                <!-- remover item da comanda -->
+                                <td><button class="btn btn-danger remover">Remover</button></td>
+                            </tr>
+                        </tbody>
+                        <!-- valor total da comanda -->
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td class="text-right"> <strong>Valor Total </strong></td>
+                                <td><strong>R$ <span id="valorTotal"></span></strong></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <!-- selecionar forma de pagamento e adicionar observações -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="exampleFormControlInput1" class="form-label"><b>Selecione a Forma de
+                                        Pagamento:
+                                    </b></label> <br>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio1" value="option1">
+                                    <label class="form-check-label" for="inlineRadio1"><i class="fas fa-money-bill"></i>
+                                        Dinheiro</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio2" value="option2">
+                                    <label class="form-check-label" for="inlineRadio2"><i class="fas fa-coins"></i>
+                                        Pix</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio3" value="option2">
+                                    <label class="form-check-label" for="inlineRadio3"><i
+                                            class="fab fa-cc-mastercard"></i>
+                                        Débito</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio4" value="option2">
+                                    <label class="form-check-label" for="inlineRadio4"><i class="fab fa-cc-visa"></i>
+                                        Crédito</label>
+                                </div>
+                            </div>
+
+                            <!-- adicionar observação -->
+                            <div class="col-6">
+                                <label for="exampleFormControlTextarea1" class="form-label"><b> Alguma
+                                        Observação?</b></label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1"
+                                    placeholder="EX.: Tirar o orégnao, troco para 50 reais..." rows="3"></textarea>
+                            </div>
+
+                            <!-- finalizar pedido -->
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-success" type="button">Realizar Pedido</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!-- comanda 2 -->
+            <div class="collapse" id="collapseExample1">
+                <div class="card card-body">
+                    <table class="table table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantidade</th>
+                                <th>Valor</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <!-- itens comanda -->
+                        <tbody>
+                            <tr>
+                                <td>Panquecas</td>
+                                <td>
+                                    <input type="button" class="less" value="-"
+                                        onclick="totalComanda(); product_1.value = (+product_1.value-1);">
+                                    <input type="number" class="qty qtd" id="product_1" name="name" value="1" min="1">
+                                    <input type="button" class="less" value="+"
+                                        onclick="totalComanda(); product_1.value = (+product_1.value+1);">
+
+                                <td> R$ <span class="valor" value="15.99">15.99</span> </td>
+                                <!-- remover item da comanda -->
+                                <td><button class="btn btn-danger remover">Remover</button></td>
+                            </tr>
+                            <tr>
+                                <td>Milkshake</td>
+                                <td>
+                                    <input type="button" class="less" value="-"
+                                        onclick="totalComanda(); product_2.value = (+product_2.value-1);">
+                                    <input type="number" class="qty qtd" id="product_2" name="name" value="3" />
+                                    <input type="button" class="more" value="+"
+                                        onclick="totalComanda(); product_2.value = (+product_2.value+1);">
+                                </td>
+                                <td> R$ <span class="valor" value="8.99">8.99</span> </td>
+                                <!-- remover item da comanda -->
+                                <td><button class="btn btn-danger remover">Remover</button></td>
+                            </tr>
+                            <tr>
+                                <td>Bacon Cheddar</td>
+                                <td>
+                                    <input type="button" class="less" value="-"
+                                        onclick="totalComanda(); product_3.value = (+product_3.value-1);">
+                                    <input type="number" class="qty qtd" id="product_3" name="name" value="2">
+                                    <input type="button" class="more" value="+"
+                                        onclick="totalComanda(); product_3.value = (+product_3.value+1);">
+                                </td>
+                                <td> R$ <span class="valor" value="15.99">15.99</span> </td>
+                                <!-- remover item da comanda -->
+                                <td><button class="btn btn-danger remover">Remover</button></td>
+                            </tr>
+                        </tbody>
+                        <!-- valor total da comanda -->
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td class="text-right"> <strong>Valor Total </strong></td>
+                                <td><strong>R$ <span id="valorTotal"></span></strong></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <!-- selecionar forma de pagamento e adicionar observações -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="exampleFormControlInput1" class="form-label"><b>Selecione a Forma de
+                                        Pagamento:
+                                    </b></label> <br>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio1" value="option1">
+                                    <label class="form-check-label" for="inlineRadio1"><i class="fas fa-money-bill"></i>
+                                        Dinheiro</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio2" value="option2">
+                                    <label class="form-check-label" for="inlineRadio2"><i class="fas fa-coins"></i>
+                                        Pix</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio3" value="option2">
+                                    <label class="form-check-label" for="inlineRadio3"><i
+                                            class="fab fa-cc-mastercard"></i>
+                                        Débito</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio4" value="option2">
+                                    <label class="form-check-label" for="inlineRadio4"><i class="fab fa-cc-visa"></i>
+                                        Crédito</label>
+                                </div>
+                            </div>
+
+                            <!-- adicionar observação -->
+                            <div class="col-6">
+                                <label for="exampleFormControlTextarea1" class="form-label"><b> Alguma
+                                        Observação?</b></label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1"
+                                    placeholder="EX.: Tirar o orégnao, troco para 50 reais..." rows="3"></textarea>
+                            </div>
+
+                            <!-- finalizar pedido -->
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-success" type="button">Realizar Pedido</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- comanda 3 -->
+            <div class="collapse" id="collapseExample2">
+                <div class="card card-body">
+                    <table class="table table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantidade</th>
+                                <th>Valor</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <!-- itens comanda -->
+                        <tbody>
+                            <tr>
+                                <td>...</td>
+                                <td>
+                                    <input type="button" class="less" value="-"
+                                        onclick="totalComanda(); product_3.value = (+product_3.value-1);">
+                                    <input type="number" class="qty qtd" id="product_3" name="name" value="0">
+                                    <input type="button" class="more" value="+"
+                                        onclick="totalComanda(); product_3.value = (+product_3.value+1);">
+                                </td>
+                                <td> R$ <span class="valor" value="00.00">00.00</span> </td>
+                                <!-- remover item da comanda -->
+                                <td><button class="btn btn-danger remover">Remover</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- selecionar forma de pagamento e adicionar observações -->
+                    <div class="container">
+                        <div class="row">
+                            <!-- adicionar observação -->
+                            <div class="col-12">
+                                <label for="exampleFormControlTextarea1" class="form-label"><b> Alguma
+                                        Observação?</b></label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1"
+                                    placeholder="EX.: Mesa com pedido para rachar..." rows="3"></textarea>
+                            </div>
+
+                            <!-- finalizar pedido -->
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-success" type="button">Criar Comanda</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer fixed-bottom">
+        <div class="bottom">
+            <p>Restaurante Escalar</p>
+        </div>
+    </footer>
+
+</body>
+<script>
+    var valorTotal = 0;
+    let quant = [];
+    let preco = [];
+    let total = 0;
+
+
+    //calcula valor total da comanda
+    function totalComanda() {
+        setTimeout(() => {
+            qtd = document.querySelectorAll('.qtd');
+            valor = document.querySelectorAll('.valor');
+            total = 0;
+
+            for (let index = 0; index < qtd.length; index++) {
+                quant.push(qtd[index].value);
+            }
+
+            for (let index = 0; index < valor.length; index++) {
+                preco.push($(valor[index]).text());
+            }
+
+            for (let index = 0; index < qtd.length; index++) {
+                total = (quant[index] * preco[index]) + total;
+            }
+            AlteraValorTotal(total);
+
+        }, 1000);
+    }
+
+    //remover itens da comanda e altera valor total
+    $("button.remover").click(function () {
+        let $tr = $(this).closest("tr");
+        $tr.remove();
+        setTimeout(() => {
+            totalComanda()
+        }, 1000);
+    });
+
+    function AlteraValorTotal(valor) {
+        $("#valorTotal").fadeOut(500, function () {
+            $(this).text(valor).fadeIn(500);
+        });
+    }
+
+    // Loading
+    const preloader = document.querySelector(".preloader");
+
+    window.addEventListener("load", () => {
+        setTimeout(() => {
+            preloader.style.display = "none";
+        }, 2000);
+    });
+</script>
+
+</html>
